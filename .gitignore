@@ -1,0 +1,12 @@
+Semantic_*/
+__pycache__/
+*logs/
+tmp/
+*.txt
+*.pkl
+wandb/
+*.model
+*.vocab
+*.png
+*.ipynb
+data/
