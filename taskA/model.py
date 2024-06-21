@@ -6,14 +6,13 @@ from scipy.stats import spearmanr
 import numpy as np
 from training_config import config
 
-# 0.633
 class lstmModel(nn.Module):
     def __init__(self, embedding_dim, hidden_dim):
         super().__init__()
         self.hidden_dim = hidden_dim
-        self.emb = nn.Embedding(10000, embedding_dim)
+        self.emb = nn.Embedding(20000, embedding_dim)
         self.lstm = nn.GRU(embedding_dim, hidden_dim, 
-                            num_layers=4, batch_first=True, 
+                            num_layers=2, batch_first=True, 
                             dropout=0.5, bidirectional=True)
         self.norm = nn.LayerNorm(hidden_dim * 2)
         self.linear = nn.Sequential(
@@ -21,18 +20,9 @@ class lstmModel(nn.Module):
             nn.ReLU(),
             nn.Linear(1024, 512),
             nn.ReLU(),
-            nn.Linear(512, 512),
-            nn.ReLU(),
-            nn.Linear(512, 256)
+            nn.Linear(512, 256),
         )
         self.cos = nn.CosineSimilarity(dim=-1, eps=1e-6)
-        self.fc = nn.Sequential(
-            nn.Linear(256 * 3, 256 * 3),
-            nn.ReLU(),
-            nn.Linear(256 * 3, 512),
-            nn.ReLU(),
-            nn.Linear(512, 3)
-        )
 
     def encode(self, x):
         x = self.emb(x)

@@ -25,7 +25,10 @@ class DataModule(L.LightningDataModule):
     def prepare_data(self):
         pass
     def load_data(self, data_path):
-        data = pd.read_csv(data_path, usecols=['s0', 's1', 'Score'])
+        # data = pd.read_csv(data_path, usecols=['s0', 's1', 'Score'])
+        data = pd.read_csv(data_path, usecols=['Text', 'Score'])
+        data['s0'] = data['Text'].apply(lambda x: x.lower().split('\n')[0])
+        data['s1'] = data['Text'].apply(lambda x: x.lower().split('\n')[1])
         ret = []
         for i in range(len(data)):
             ret.append({
