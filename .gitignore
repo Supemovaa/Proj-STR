@@ -10,3 +10,5 @@ wandb/
 *.png
 *.ipynb
 data/
+nllb*/
+*-lr=*/
