@@ -44,7 +44,7 @@ def train_step(model, loader, criterion, optimizer, loss_writer):
 
 def train(model, loader, epochs):
     criterion = Criterion(temp=0.05)
-    optimizer = torch.optim.Adam(params=model.parameters(), lr=1e-5)
+    optimizer = torch.optim.Adam(params=model.parameters(), lr=1e-5, weight_decay=1e-4)
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer=optimizer, step_size=50, gamma=0.5)
     loss_writer = Accumulater(batch_size)
     tl = []
@@ -88,5 +88,5 @@ if __name__ == '__main__':
     with open('./tmp/dev_loader.pkl', 'rb') as f:
         dloader = pkl.load(f)
     if args.t == 1:
-        train(model, dloader, 500)
+        train(model, dloader, 1000)
     print(final_test(model, tloader))

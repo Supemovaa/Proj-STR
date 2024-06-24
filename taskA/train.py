@@ -74,7 +74,7 @@ def final_test(model, loaders):
 
 def train(model, train_loader, dev_loader, epochs):
     criterion = nn.MSELoss()
-    optimizer = torch.optim.Adam(params=model.parameters(), lr=1e-5)
+    optimizer = torch.optim.Adam(params=model.parameters(), lr=1e-5, weight_decay=1e-4)
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer=optimizer, step_size=10, gamma=0.5)
     loss_writer = Accumulater(64)
     corr_writer = Accumulater(64)

@@ -14,17 +14,15 @@ class lstmModel(nn.Module):
         self.hidden_dim = hidden_dim
         self.emb = nn.Embedding(1600, embedding_dim)
         self.lstm = nn.GRU(embedding_dim, hidden_dim, 
-                            num_layers=4, batch_first=True, 
-                            dropout=0.1, bidirectional=True)
+                            num_layers=2, batch_first=True, 
+                            dropout=0.5, bidirectional=True)
         self.norm = nn.LayerNorm(hidden_dim * 2)
         self.linear = nn.Sequential(
             nn.Linear(hidden_dim * 2, 1024),
             nn.ReLU(),
             nn.Linear(1024, 512),
             nn.ReLU(),
-            nn.Linear(512, 512),
-            nn.ReLU(),
-            nn.Linear(512, 768)
+            nn.Linear(512, 256)
         )
 
     def forward(self, x):
